@@ -41,6 +41,8 @@ if "%MODE%"=="onboarding" (
     echo.
     echo This will create a new identity layer.
     echo.
+    REM NOTE: tools/setup/onboarding_wizard.py is not yet implemented.
+    REM       Thought-stream setup below will still run.
     python tools/setup/onboarding_wizard.py
 ) else if "%MODE%"=="machine" (
     echo.
@@ -50,6 +52,8 @@ if "%MODE%"=="onboarding" (
     echo.
     echo This will configure this machine for an existing identity.
     echo.
+    REM NOTE: tools/setup/machine_config.py is not yet implemented.
+    REM       Thought-stream setup below will still run.
     python tools/setup/machine_config.py
 ) else (
     echo ERROR: Invalid mode. Use 'onboarding' or 'machine'
@@ -58,8 +62,10 @@ if "%MODE%"=="onboarding" (
 
 if %errorlevel% neq 0 (
     echo.
-    echo Setup failed. Check errors above.
-    exit /b 1
+    echo WARNING: Python setup step failed or is not yet implemented.
+    echo Continuing with thought-stream setup...
+    echo.
+    REM Non-fatal: thought-stream setup runs regardless
 )
 
 REM --- Thought Stream Setup (always runs after successful onboarding or machine config) ---

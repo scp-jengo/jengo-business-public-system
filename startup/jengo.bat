@@ -7,16 +7,18 @@ echo Jengo Business - Starting...
 echo ========================================
 echo.
 
-REM Check for configuration
+REM Check for configuration — redirect to wizard if not configured
 if not exist "%USERPROFILE%\.jengo\config.yaml" (
-    echo ERROR: Jengo not configured
+    echo Jengo is not yet configured on this machine.
+    echo Starting setup wizard...
     echo.
-    echo Please run setup wizard first:
-    echo   setup-wizard.bat onboarding  (for first time)
-    echo   setup-wizard.bat machine     (for new device)
-    echo.
-    pause
-    exit /b 1
+    call "%~dp0..\setup-wizard.bat"
+    REM After wizard: re-check config
+    if not exist "%USERPROFILE%\.jengo\config.yaml" (
+        echo Setup did not complete. Run setup-wizard.bat manually.
+        pause
+        exit /b 1
+    )
 )
 
 REM Load configuration

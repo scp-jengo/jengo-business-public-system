@@ -18,12 +18,17 @@ if errorlevel 1 (
     exit /b 1
 )
 
-REM Check for configuration
+REM Check for configuration — redirect to wizard if not configured
 if not exist "%USERPROFILE%\.jengo\config.yaml" (
-    echo ERROR: Jengo not configured
-    echo Please run: setup-wizard.bat onboarding
-    pause
-    exit /b 1
+    echo Jengo is not yet configured on this machine.
+    echo Starting setup wizard...
+    echo.
+    call "%~dp0..\setup-wizard.bat"
+    if not exist "%USERPROFILE%\.jengo\config.yaml" (
+        echo Setup did not complete. Run setup-wizard.bat manually.
+        pause
+        exit /b 1
+    )
 )
 
 REM Load identity
