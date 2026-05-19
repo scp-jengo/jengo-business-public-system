@@ -90,10 +90,27 @@ if "%MODE%"=="onboarding" (
     exit /b 1
 )
 
+REM --- Thought Stream Setup (always runs after successful setup) ---
+echo.
+echo [thought-stream] Setting up cross-session continuity...
+powershell -NoProfile -ExecutionPolicy Bypass -File "%~dp0register-stream-task.ps1"
+if %errorlevel% neq 0 (
+    echo.
+    echo WARNING: Thought stream task registration may require administrator rights.
+    echo Run startup\register-stream-task.ps1 manually as administrator to complete this step.
+    echo (Non-fatal: Jengo works without the nightly synthesis task)
+    echo.
+)
+
 echo.
 echo ========================================
 echo Setup complete!
 echo ========================================
+echo.
+echo Jengo is ready. What was set up:
+echo   - Identity and knowledge layers configured
+echo   - Cross-session thought continuity (thought-stream + active-synthesis)
+echo   - Nightly synthesis task (if admin rights were available)
 echo.
 echo Next steps:
 echo   1. Review configuration: %USERPROFILE%\.jengo\config.yaml
