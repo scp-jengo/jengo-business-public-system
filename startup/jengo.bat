@@ -12,7 +12,7 @@ if not exist "%USERPROFILE%\.jengo\config.yaml" (
     echo Jengo is not yet configured on this machine.
     echo Starting setup wizard...
     echo.
-    call "%~dp0..\setup-wizard.bat"
+    call "%~dp0setup-wizard.bat" machine
     REM After wizard: re-check config
     if not exist "%USERPROFILE%\.jengo\config.yaml" (
         echo Setup did not complete. Run setup-wizard.bat manually.
